@@ -1,0 +1,19 @@
+{
+  "name": "advanced-cpt-generator",
+  "version": "1.0.0",
+  "description": "This plugins helps you to create advanced custom post types in just few clicks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start"
+  },
+  "keywords": [],
+  "author": "Tejas Sonawane",
+  "license": "ISC",
+  "dependencies": {
+    "@wordpress/scripts": "^25.0.0",
+    "axios": "^1.2.1",
+    "bootstrap": "^5.2.3"
+  }
+}
