@@ -41,7 +41,7 @@ const PostTypes = ({ onPTChange, postTypes }) => {
                         <div class="my-3">
                             <label for="hierarchical" className="form-label fw-semibold">Hierarchical</label>
                             <select class="form-select" aria-label="Default select example" name="hierarchical" id="hierarchical" onChange={changePT}>
-                                {postTypes.hierarchical
+                                {postTypes.hierarchical == 'true'
                                     ? <><option value="false">No (like posts)</option>
                                         <option selected value="true">Yes (like pages)</option></>
                                     : <><option selected value="false">No (like posts)</option>

@@ -28,6 +28,8 @@ const Rest = ({onRestChange, rest}) => {
                             <p>Whether to add the post type route in the REST API 'wp/v2' namespace.</p>
                         </div>
                     </div>
+                    {rest.show_in_rest != '' && 
+                    <>
                     <div className="col-md-4">
                         <div class="my-3">
                             <label for="rest_base" className="form-label fw-semibold">Reset Base</label>
@@ -42,6 +44,7 @@ const Rest = ({onRestChange, rest}) => {
                             <p>REST API Controller class name. Default is 'WP_REST_Posts_Controller'.</p>
                         </div>
                     </div>
+                    </>}
                 </div>
             </div>
         </>

@@ -14,8 +14,8 @@ const Labels = ({onLabelChange, labels}) => {
                             <input type="text" className="form-control" name="menu_name" id="menu_name" value={labels.menu_name} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
-                            <label for="admin_bar_name" className="form-label fw-semibold">Admin Bar Name</label>
-                            <input type="text" className="form-control" name="admin_bar_name" id="admin_bar_name" value={labels.admin_bar_name} onChange={changeLabels}/>
+                            <label for="name_admin_bar" className="form-label fw-semibold">Admin Bar Name</label>
+                            <input type="text" className="form-control" name="name_admin_bar" id="name_admin_bar" value={labels.name_admin_bar} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
                             <label for="archives" className="form-label fw-semibold">Archives</label>
@@ -26,8 +26,8 @@ const Labels = ({onLabelChange, labels}) => {
                             <input type="text" className="form-control" name="attributes" id="attributes" value={labels.attributes} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
-                            <label for="parent_item" className="form-label fw-semibold">Parent Item</label>
-                            <input type="text" className="form-control" name="parent_item" id="parent_item" value={labels.parent_item} onChange={changeLabels}/>
+                            <label for="parent_item_colon" className="form-label fw-semibold">Parent Item</label>
+                            <input type="text" className="form-control" name="parent_item_colon" id="parent_item_colon" value={labels.parent_item_colon} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
                             <label for="all_items" className="form-label fw-semibold">All Items</label>
@@ -64,8 +64,8 @@ const Labels = ({onLabelChange, labels}) => {
                             <input type="text" className="form-control" name="view_items" id="view_items" value={labels.view_items} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
-                            <label for="search_item" className="form-label fw-semibold">Search Item</label>
-                            <input type="text" className="form-control" name="search_item" id="search_item" value={labels.search_item} onChange={changeLabels}/>
+                            <label for="search_items" className="form-label fw-semibold">Search Item</label>
+                            <input type="text" className="form-control" name="search_items" id="search_items" value={labels.search_items} onChange={changeLabels}/>
                         </div>
                     </div>
                     <div className="col-md-3">
@@ -90,8 +90,8 @@ const Labels = ({onLabelChange, labels}) => {
                             <input type="text" className="form-control" name="remove_featured_image" id="remove_featured_image" value={labels.remove_featured_image} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
-                            <label for="use_as_featured_image" className="form-label fw-semibold">Use as featured image</label>
-                            <input type="text" className="form-control" name="use_as_featured_image" id="use_as_featured_image" value={labels.use_as_featured_image} onChange={changeLabels}/>
+                            <label for="use_featured_image" className="form-label fw-semibold">Use as featured image</label>
+                            <input type="text" className="form-control" name="use_featured_image" id="use_featured_image" value={labels.use_featured_image} onChange={changeLabels}/>
                         </div>
                         <div class="my-3">
                             <label for="insert_into_item" className="form-label fw-semibold">Insert into item</label>

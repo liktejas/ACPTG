@@ -62,10 +62,10 @@ const AddNewCPT = () => {
   });
   const [labels, setLabels] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     menu_name: "Post Types",
-    admin_bar_name: "Post Type",
+    name_admin_bar: "Post Type",
     archives: "Item Archives",
     attributes: "Item Attributes",
-    parent_item: "Parent Item:",
+    parent_item_colon: "Parent Item:",
     all_items: "All Items",
     add_new_item: "Add New Item",
     add_new: "Add New",
@@ -74,13 +74,13 @@ const AddNewCPT = () => {
     update_item: "Update Item",
     view_item: "View Item",
     view_items: "View Items",
-    search_item: "Search Item",
+    search_items: "Search Item",
     not_found: "Not Found",
     not_found_in_trash: "Not Found in Trash",
     featured_image: "Featured Image",
     set_featured_image: "Set Featured Image",
     remove_featured_image: "Remove Featured Image",
-    use_as_featured_image: "Use as featured image",
+    use_featured_image: "Use as featured image",
     insert_into_item: "Insert into item",
     uploaded_to_this_item: "Uploaded to this item",
     items_list: "Items list",
@@ -661,14 +661,14 @@ const Labels = _ref => {
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    for: "admin_bar_name",
+    for: "name_admin_bar",
     className: "form-label fw-semibold"
   }, "Admin Bar Name"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     className: "form-control",
-    name: "admin_bar_name",
-    id: "admin_bar_name",
-    value: labels.admin_bar_name,
+    name: "name_admin_bar",
+    id: "name_admin_bar",
+    value: labels.name_admin_bar,
     onChange: changeLabels
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
@@ -697,14 +697,14 @@ const Labels = _ref => {
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    for: "parent_item",
+    for: "parent_item_colon",
     className: "form-label fw-semibold"
   }, "Parent Item"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     className: "form-control",
-    name: "parent_item",
-    id: "parent_item",
-    value: labels.parent_item,
+    name: "parent_item_colon",
+    id: "parent_item_colon",
+    value: labels.parent_item_colon,
     onChange: changeLabels
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
@@ -807,14 +807,14 @@ const Labels = _ref => {
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    for: "search_item",
+    for: "search_items",
     className: "form-label fw-semibold"
   }, "Search Item"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     className: "form-control",
-    name: "search_item",
-    id: "search_item",
-    value: labels.search_item,
+    name: "search_items",
+    id: "search_items",
+    value: labels.search_items,
     onChange: changeLabels
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "col-md-3"
@@ -881,14 +881,14 @@ const Labels = _ref => {
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    for: "use_as_featured_image",
+    for: "use_featured_image",
     className: "form-label fw-semibold"
   }, "Use as featured image"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     className: "form-control",
-    name: "use_as_featured_image",
-    id: "use_as_featured_image",
-    value: labels.use_as_featured_image,
+    name: "use_featured_image",
+    id: "use_featured_image",
+    value: labels.use_featured_image,
     onChange: changeLabels
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
@@ -1226,7 +1226,7 @@ const PostTypes = _ref => {
     name: "hierarchical",
     id: "hierarchical",
     onChange: changePT
-  }, postTypes.hierarchical ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, postTypes.hierarchical == 'true' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "false"
   }, "No (like posts)"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     selected: true,
@@ -1414,7 +1414,7 @@ const Rest = _ref => {
   }, "Yes"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     selected: true,
     value: "false"
-  }, "No"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Whether to add the post type route in the REST API 'wp/v2' namespace."))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, "No"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Whether to add the post type route in the REST API 'wp/v2' namespace."))), rest.show_in_rest != '' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "col-md-4"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     class: "my-3"
@@ -1442,7 +1442,7 @@ const Rest = _ref => {
     name: "rest_controller_class",
     value: rest.rest_controller_class,
     onChange: changeRest
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "REST API Controller class name. Default is 'WP_REST_Posts_Controller'."))))));
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "REST API Controller class name. Default is 'WP_REST_Posts_Controller'.")))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Rest);
 

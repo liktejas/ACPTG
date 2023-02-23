@@ -100,7 +100,7 @@ class WP_ACPTG_EndPoints {
         $permalink    = $body['permalink'];
         $capabilities = $body['capabilities'];
         $rest         = $body['rest'];
-        error_log(print_r($rest, true));
+        error_log(print_r($post_types, true));
         $labels += array( 'singular_name' => $post_types['name_singular'], 'name' => $post_types['name_plural'] );
         unset( $post_types['name_plural'] );
         
@@ -111,28 +111,26 @@ class WP_ACPTG_EndPoints {
         $supports = $this->get_supports( $options );
         $args['supports'] = $supports;
         $args['taxonomies'] = explode(',', $post_types['link_to_taxonomies']);
-        $args['hierarchical'] = $post_types['hierarchical'];
-        $args['public'] = $visibility['visibility_public'];
-        $args['show_ui'] = $visibility['visibility_show_ui'];
-        $args['show_in_menu'] = $visibility['visibility_is_show_in_admin_sidebar'];
-        $args['menu_position'] = $visibility['visibility_where_show_in_admin_sidebar'];
+        $args['hierarchical'] = $post_types['hierarchical'] == 'false' ? false : true;
+        $args['public'] = $visibility['visibility_public'] == 'false' ? false : true;
+        $args['show_ui'] = $visibility['visibility_show_ui'] == 'false' ? false : true;
+        $args['show_in_menu'] = $visibility['visibility_is_show_in_admin_sidebar'] == 'false' ? false : true;
+        $args['menu_position'] = intval( $visibility['visibility_where_show_in_admin_sidebar'] );
         if( $visibility['visibility_admin_sidebar_icon'] != null) $args['menu_icon'] = $visibility['visibility_admin_sidebar_icon'];
-        $args['show_in_admin_bar'] = $visibility['visibility_show_in_admin_bar'];
-        $args['show_in_nav_menus'] = $visibility['visibility_show_in_nav_menu'];
-        $args['can_export'] = $options['enable_export'];
-        $args['has_archive'] = $options['enable_archives'];
-        $args['exclude_from_search'] = $options['exclude_from_search'];
+        $args['show_in_admin_bar'] = $visibility['visibility_show_in_admin_bar'] == 'false' ? false : true;
+        $args['show_in_nav_menus'] = $visibility['visibility_show_in_nav_menu'] == 'false' ? false : true;
+        $args['can_export'] = $options['enable_export'] == 'false' ? false : true;
+        $args['has_archive'] = $options['enable_archives'] == 'false' ? false : true;
+        $args['exclude_from_search'] = $options['exclude_from_search'] == 'false' ? false : true;
         if( $query['query'] == 'true') $args['query_var'] = $query['custom_query'];
-        $args['publicly_queryable'] = $query['publicly_queryable'];
-        if( $permalink['permalink_rewrite'] == 'false' ) {
-            $args['rewrite'] = $permalink['permalink_rewrite'];
-        }
+        $args['publicly_queryable'] = $query['publicly_queryable'] == 'false' ? false : true;
+        if( $permalink['permalink_rewrite'] == 'false' ) $args['rewrite'] = false;
         if( $permalink['permalink_rewrite'] == 'custom' ) {
             $rewrite = array(
                 'slug'       => $permalink['permalink_url_slug'],
-                'with_front' => $permalink['permalink_use_url_slug'],
-                'pages'      => $permalink['permalink_pagination'],
-                'feeds'      => $permalink['permalink_feeds'],
+                'with_front' => $permalink['permalink_use_url_slug'] == 'false' ? false : true,
+                'pages'      => $permalink['permalink_pagination'] == 'false' ? false : true,
+                'feeds'      => $permalink['permalink_feeds'] == 'false' ? false : true,
             );
             $args['rewrite'] = $rewrite;
         }
@@ -162,7 +160,22 @@ class WP_ACPTG_EndPoints {
         
         error_log( print_r( $args, true ) );
 
-        return rest_ensure_response( array('msg' => 'got response') );
+        error_log( print_r( $this->make_option( $post_types['post_type_key'] ), true ) );
+
+        if ( add_option( $this->make_option( $post_types['post_type_key'] ), $args ) ) {
+            return rest_ensure_response( array(
+                'msg'    => 'ACPT Generated Successfully',
+                'status' => 201,
+                )
+            );
+        } else {
+            return rest_ensure_response( array(
+                'msg'    => 'Failed to Generate ACPT',
+                'status' => 400,
+                )
+            );
+        }
+                
     }
 
     public function get_supports( $supports ) {
@@ -180,6 +193,10 @@ class WP_ACPTG_EndPoints {
         if( $supports['supports_post_formats_checkbox'] ) $all_supported[]    = 'post-formats';
 
         return $all_supported;
+    }
+
+    public function make_option( $option ) {
+        return 'acptg_' . $option;
     }
 }
 
