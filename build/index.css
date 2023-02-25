@@ -11,10 +11,10 @@
 /*!*****************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/components/settings.scss ***!
   \*****************************************************************************************************************************************************************************************************************************************************/
-.acpt-generator_page_acptg-add-new .acptg-label {
+.acpt-generator_page_acptg-add-new .acptg-label, .toplevel_page_acptg-settings .acptg-label {
   font-weight: 600;
 }
-.acpt-generator_page_acptg-add-new input[type=checkbox]:checked::before {
+.acpt-generator_page_acptg-add-new input[type=checkbox]:checked::before, .toplevel_page_acptg-settings input[type=checkbox]:checked::before {
   content: "";
 }
 

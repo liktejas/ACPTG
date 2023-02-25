@@ -26,18 +26,6 @@ class WP_ACPTG_EndPoints {
     }
 
     public function acptg_create_rest_routes() {
-        register_rest_route( 'acptg/v2', '/settings', array(
-                'methods'             => 'GET',
-                'callback'            => array( $this, 'get_settings' ),
-                'permission_callback' => array( $this, 'get_settings_permission' ),
-            )
-        );
-        register_rest_route( 'acptg/v2', '/settings', array(
-                'methods'             => 'POST',
-                'callback'            => array( $this, 'save_settings' ),
-                'permission_callback' => array( $this, 'save_settings_permission' ),
-            )
-        );
 
         register_rest_route( 'acptg/v2', '/acptg_list_all', array(
                 'methods'             => 'GET',
@@ -52,32 +40,17 @@ class WP_ACPTG_EndPoints {
                 'permission_callback' => array( $this, 'save_settings_permission' ),
             )
         );
-    }
 
-    public function get_settings() {
-        $firstname = get_option( 'wp_acpt_settings_firstname' );
-        $lastname  = get_option( 'wp_acpt_settings_lastname' );
-        $email     = get_option( 'wp_acpt_settings_email' );
-        $response = array(
-            'firstname' => $firstname,
-            'lastname'  => $lastname,
-            'email'     => $email,
+        register_rest_route( 'acptg/v2', '/acptg_get_cpt_by_key', array(
+                'methods'             => 'POST',
+                'callback'            => array( $this, 'acptg_get_option_by_id' ),
+                'permission_callback' => array( $this, 'save_settings_permission' ),
+            )
         );
-        return rest_ensure_response( $response );
     }
 
     public function get_settings_permission() {
         return true;
-    }
-
-    public function save_settings( $req ) {
-        $firstname = sanitize_text_field( $req['firstName'] );
-        $lastname  = sanitize_text_field( $req['lastName'] );
-        $email     = sanitize_text_field( $req['email'] );
-        update_option( 'wp_acpt_settings_firstname', $firstname );
-        update_option( 'wp_acpt_settings_lastname', $lastname );
-        update_option( 'wp_acpt_settings_email', $email );
-        return rest_ensure_response( 'success' );
     }
 
     public function save_settings_permission() {
@@ -157,11 +130,6 @@ class WP_ACPTG_EndPoints {
         $args['rest_base'] = $rest['rest_base'];
         $args['rest_controller_class'] = $rest['rest_controller_class'];
 
-        
-        error_log( print_r( $args, true ) );
-
-        error_log( print_r( $this->make_option( $post_types['post_type_key'] ), true ) );
-
         if ( add_option( $this->make_option( $post_types['post_type_key'] ), $args ) ) {
             return rest_ensure_response( array(
                 'msg'    => 'ACPT Generated Successfully',
@@ -198,6 +166,17 @@ class WP_ACPTG_EndPoints {
     public function make_option( $option ) {
         return 'acptg_' . $option;
     }
+
+    public function acptg_get_option_by_id( WP_REST_Request $request ) {
+        $body = json_decode( $request->get_body(), true );
+        $option = get_option( $body['cptKey'] );
+        return rest_ensure_response( array(
+            'option'    => $option,
+            'status' => 200,
+            )
+        );
+    }
+
 }
 
 new WP_ACPTG_EndPoints();
