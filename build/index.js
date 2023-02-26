@@ -267,7 +267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _Tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tabs */ "./src/components/Tabs.js");
 /* harmony import */ var _Tabs_PostTypes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Tabs/PostTypes */ "./src/components/Tabs/PostTypes.js");
 /* harmony import */ var _Tabs_Labels__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Tabs/Labels */ "./src/components/Tabs/Labels.js");
@@ -277,6 +277,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Tabs_Permalinks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Tabs/Permalinks */ "./src/components/Tabs/Permalinks.js");
 /* harmony import */ var _Tabs_Capabilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Tabs/Capabilities */ "./src/components/Tabs/Capabilities.js");
 /* harmony import */ var _Tabs_Rest__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Tabs/Rest */ "./src/components/Tabs/Rest.js");
+/* harmony import */ var _ListCPT__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ListCPT */ "./src/components/ListCPT.js");
+
 
 
 
@@ -295,6 +297,7 @@ const EditCPT = _ref => {
   } = _ref;
   const url = `${appLocalizer.apiURL}/acptg/v2/acptg_save_cpt`;
   const fetchCPT = `${appLocalizer.apiURL}/acptg/v2/acptg_get_cpt_by_key`;
+  const [isListDisplayed, setIsListDisplayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   const [postTypes, setPostTypes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     post_type_key: "post_key",
     description_key: "Post Type Description",
@@ -344,8 +347,7 @@ const EditCPT = _ref => {
     supports_post_formats_checkbox: false,
     exclude_from_search: "false",
     enable_export: "true",
-    enable_archives: "true",
-    custom_archive_slug: ""
+    enable_archives: "true"
   });
   const [visibility, setVisibility] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     visibility_public: 'true',
@@ -384,18 +386,183 @@ const EditCPT = _ref => {
     rest_base: "",
     rest_controller_class: ""
   });
+  const checkSupports = supports => {
+    const defaultSupports = {
+      supports_title_checkbox: true,
+      supports_editor_checkbox: true,
+      supports_excerpt_checkbox: false,
+      supports_author_checkbox: false,
+      supports_thumbnail_checkbox: false,
+      supports_comments_checkbox: false,
+      supports_trackbacks_checkbox: false,
+      supports_revisions_checkbox: false,
+      supports_custom_fields_checkbox: false,
+      supports_page_attributes_checkbox: false,
+      supports_post_formats_checkbox: false
+    };
+    for (let support of supports) {
+      switch (support) {
+        case 'title':
+          defaultSupports.supports_title_checkbox = true;
+          break;
+        case 'editor':
+          defaultSupports.supports_editor_checkbox = true;
+          break;
+        case 'excerpt':
+          defaultSupports.supports_excerpt_checkbox = true;
+          break;
+        case 'author':
+          defaultSupports.supports_author_checkbox = true;
+          break;
+        case 'thumbnail':
+          defaultSupports.supports_thumbnail_checkbox = true;
+          break;
+        case 'comments':
+          defaultSupports.supports_comments_checkbox = true;
+          break;
+        case 'trackbacks':
+          defaultSupports.supports_trackbacks_checkbox = true;
+          break;
+        case 'revisions':
+          defaultSupports.supports_revisions_checkbox = true;
+          break;
+        case 'custom-fields':
+          defaultSupports.supports_custom_fields_checkbox = true;
+          break;
+        case 'page-attributes':
+          defaultSupports.supports_page_attributes_checkbox = true;
+          break;
+        case 'post-formats':
+          defaultSupports.supports_post_formats_checkbox = true;
+          break;
+      }
+    }
+    return defaultSupports;
+  };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     console.log(cptKey);
-    axios__WEBPACK_IMPORTED_MODULE_11__["default"].post(fetchCPT, {
+    axios__WEBPACK_IMPORTED_MODULE_12__["default"].post(fetchCPT, {
       cptKey
     }, {
       headers: {
         'content-type': 'application/json',
         'X-WP-NONCE': appLocalizer.nonce
       }
-    }).then(res => console.log(res));
+    }).then(res => {
+      console.log(res.data.option);
+      const newData = res.data.option;
+      const editPostTypes = {
+        post_type_key: cptKey,
+        name_singular: newData.label,
+        name_plural: newData.labels.name,
+        link_to_taxonomies: newData.taxonomies.toString(),
+        hierarchical: newData.hierarchical.toString(),
+        description_key: newData.description
+      };
+      const editLabels = {
+        add_new: newData.labels.add_new,
+        add_new_item: newData.labels.add_new_item,
+        all_items: newData.labels.all_items,
+        archives: newData.labels.archives,
+        attributes: newData.labels.attributes,
+        edit_item: newData.labels.edit_item,
+        featured_image: newData.labels.featured_image,
+        filter_items_list: newData.labels.filter_items_list,
+        insert_into_item: newData.labels.insert_into_item,
+        items_list: newData.labels.items_list,
+        items_list_navigation: newData.labels.items_list_navigation,
+        menu_name: newData.labels.menu_name,
+        name: newData.labels.name,
+        name_admin_bar: newData.labels.name_admin_bar,
+        new_item: newData.labels.new_item,
+        not_found: newData.labels.not_found,
+        not_found_in_trash: newData.labels.not_found_in_trash,
+        parent_item_colon: newData.labels.parent_item_colon,
+        remove_featured_image: newData.labels.remove_featured_image,
+        search_items: newData.labels.search_items,
+        set_featured_image: newData.labels.set_featured_image,
+        singular_name: newData.labels.singular_name,
+        update_item: newData.labels.update_item,
+        uploaded_to_this_item: newData.labels.uploaded_to_this_item,
+        use_featured_image: newData.labels.use_featured_image,
+        view_item: newData.labels.view_item,
+        view_items: newData.labels.view_items
+      };
+      const editOptions = {
+        ...checkSupports(newData.supports)
+      };
+      editOptions.exclude_from_search = newData.exclude_from_search.toString();
+      editOptions.enable_export = newData.can_export.toString();
+      editOptions.enable_archives = newData.has_archive.toString();
+      const editVisibility = {
+        visibility_public: newData.public.toString(),
+        visibility_show_ui: newData.show_ui.toString(),
+        visibility_is_show_in_admin_sidebar: newData.show_in_admin_bar.toString(),
+        visibility_where_show_in_admin_sidebar: newData.menu_position.toString(),
+        visibility_show_in_admin_bar: newData.show_in_admin_bar.toString(),
+        visibility_show_in_nav_menu: newData.show_in_nav_menus.toString()
+      };
+      editVisibility.visibility_admin_sidebar_icon = newData.menu == undefined ? '' : newData.menu;
+      const editQuery = {
+        publicly_queryable: newData.publicly_queryable.toString()
+      };
+      if (newData.query_var == undefined) {
+        editQuery.custom_query = 'post_type';
+        editQuery.query = 'false';
+      }
+      const editPermalink = {};
+      if (newData.permalink == 'false') {
+        setPermalink(permalink.permalink_rewrite = 'false');
+      }
+      if (newData.permalink == 'custom') {
+        editPermalink.permalink_rewrite = 'custom';
+        editPermalink.permalink_url_slug = newData.rewrite.slug;
+        editPermalink.permalink_use_url_slug = newData.rewrite.with_front;
+        editPermalink.permalink_pagination = newData.rewrite.pages;
+        editPermalink.permalink_feeds = newData.rewrite.feeds;
+        setPermalink(editPermalink);
+      }
+      const editCapabilities = {
+        capabilities: "base",
+        base_capability_type: "page",
+        capability_read_post: "read_post",
+        capability_read_private_post: "read_private_posts",
+        capability_publish_posts: "publish_posts",
+        capability_delete_posts: "delete_post",
+        capability_edit_post: "edit_post",
+        capability_edit_posts: "edit_posts",
+        capability_edit_others_posts: "edit_others_posts"
+      };
+      if (newData.capability_type == 'post') {
+        editCapabilities.base_capability_type = 'post';
+      }
+      if (typeof newData.capability_type != 'string') {
+        editCapabilities.capabilities = 'custom';
+        editCapabilities.capability_read_post = newData.capabilities.read_post;
+        editCapabilities.capability_read_private_post = newData.capabilities.read_private_posts;
+        editCapabilities.capability_publish_posts = newData.capabilities.publish_posts;
+        editCapabilities.capability_delete_posts = newData.capabilities.delete_post;
+        editCapabilities.capability_edit_post = newData.capabilities.edit_post;
+        editCapabilities.capability_edit_posts = newData.capabilities.edit_posts;
+        editCapabilities.capability_edit_others_posts = newData.capabilities.edit_others_posts;
+      }
+      const editRest = {
+        show_in_rest: "",
+        rest_base: newData.rest_base,
+        rest_controller_class: newData.rest_controller_class
+      };
+      if (newData.show_in_rest == 'true') editRest.show_in_rest = 'true';
+      if (newData.show_in_rest == 'false') editRest.show_in_rest = 'false';
+      setPostTypes(editPostTypes);
+      setLabels(editLabels);
+      setOptions(editOptions);
+      setVisibility(editVisibility);
+      setQuery(editQuery);
+      setCapabilities(editCapabilities);
+      setRest(editRest);
+    });
   }, []);
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !isListDisplayed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "container"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
     className: "wp-heading-inline mb-3"
@@ -428,7 +595,10 @@ const EditCPT = _ref => {
     rest: rest
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     className: "btn btn-success"
-  }, "Save Changes")));
+  }, "Save Changes"), " \u2003", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: () => setIsListDisplayed(true),
+    className: "btn btn-warning"
+  }, "Go Back")), isListDisplayed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_ListCPT__WEBPACK_IMPORTED_MODULE_11__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditCPT);
 
@@ -447,12 +617,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _EditCPT__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EditCPT */ "./src/components/EditCPT.js");
-/* harmony import */ var _Tabs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Tabs */ "./src/components/Tabs.js");
-
 
 
 
@@ -463,7 +631,7 @@ const App = () => {
   const [cptKey, setCPTKey] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
   const fetchACPTGURL = appLocalizer.apiURL + '/acptg/v2/acptg_list_all';
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    axios__WEBPACK_IMPORTED_MODULE_4__["default"].get(fetchACPTGURL).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_3__["default"].get(fetchACPTGURL).then(res => {
       if (res.status === 200) {
         console.log(res.data);
         setACPTGList(res.data);
