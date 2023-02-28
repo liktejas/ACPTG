@@ -12,47 +12,47 @@ const Supports = ({onOptionsChange, options}) => {
                         <div class="my-3">
                             <p className="fw-semibold fs-6">Supports</p>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_title_checkbox} name="supports_title_checkbox" id="supports_title_checkbox" defaultChecked={options.supports_title_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_title_checkbox} name="supports_title_checkbox" id="supports_title_checkbox" checked={options.supports_title_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_title_checkbox">Title</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_editor_checkbox} name="supports_editor_checkbox" id="supports_editor_checkbox" defaultChecked={options.supports_editor_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_editor_checkbox} name="supports_editor_checkbox" id="supports_editor_checkbox" checked={options.supports_editor_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_editor_checkbox">Editor</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_excerpt_checkbox} name="supports_excerpt_checkbox" id="supports_excerpt_checkbox" defaultChecked={options.supports_excerpt_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_excerpt_checkbox} name="supports_excerpt_checkbox" id="supports_excerpt_checkbox" checked={options.supports_excerpt_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_excerpt_checkbox">Excerpt</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_author_checkbox} name="supports_author_checkbox" id="supports_author_checkbox" defaultChecked={options.supports_author_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_author_checkbox} name="supports_author_checkbox" id="supports_author_checkbox" checked={options.supports_author_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_author_checkbox">Author</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_thumbnail_checkbox} name="supports_thumbnail_checkbox" id="supports_thumbnail_checkbox" defaultChecked={options.supports_thumbnail_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_thumbnail_checkbox} name="supports_thumbnail_checkbox" id="supports_thumbnail_checkbox" checked={options.supports_thumbnail_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_thumbnail_checkbox">Featured Image</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_comments_checkbox} name="supports_comments_checkbox" id="supports_comments_checkbox" defaultChecked={options.supports_comments_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_comments_checkbox} name="supports_comments_checkbox" id="supports_comments_checkbox" checked={options.supports_comments_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_comments_checkbox">Comments</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_trackbacks_checkbox} name="supports_trackbacks_checkbox" id="supports_trackbacks_checkbox" defaultChecked={options.supports_trackbacks_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_trackbacks_checkbox} name="supports_trackbacks_checkbox" id="supports_trackbacks_checkbox" checked={options.supports_trackbacks_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_trackbacks_checkbox">Trackbacks</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_revisions_checkbox} name="supports_revisions_checkbox" id="supports_revisions_checkbox" defaultChecked={options.supports_revisions_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_revisions_checkbox} name="supports_revisions_checkbox" id="supports_revisions_checkbox" checked={options.supports_revisions_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_revisions_checkbox">Revisions</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_custom_fields_checkbox} id="supports_custom_fields_checkbox" name="supports_custom_fields_checkbox" defaultChecked={options.supports_custom_fields_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_custom_fields_checkbox} id="supports_custom_fields_checkbox" name="supports_custom_fields_checkbox" checked={options.supports_custom_fields_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_custom_fields_checkbox">Custom Fields</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_page_attributes_checkbox} id="supports_page_attributes_checkbox" name="supports_page_attributes_checkbox" defaultChecked={options.supports_page_attributes_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_page_attributes_checkbox} id="supports_page_attributes_checkbox" name="supports_page_attributes_checkbox" checked={options.supports_page_attributes_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_page_attributes_checkbox">Page Attributes (hierarchical must be true)</label>
                             </div>
                             <div>
-                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_post_formats_checkbox} id="supports_post_formats_checkbox" name="supports_post_formats_checkbox" defaultChecked={options.supports_post_formats_checkbox} onChange={changeOptions} />
+                                <input class="form-check-input custom-checkbox" type="checkbox" value={options.supports_post_formats_checkbox} id="supports_post_formats_checkbox" name="supports_post_formats_checkbox" checked={options.supports_post_formats_checkbox} onChange={changeOptions} />
                                 <label class="form-check-label align-baseline" for="supports_post_formats_checkbox">Post Formats</label>
                             </div>
                         </div>

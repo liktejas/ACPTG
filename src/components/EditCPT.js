@@ -13,7 +13,7 @@ import ListCPT from './ListCPT'
 
 const EditCPT = ({cptKey}) => {
 
-  const url = `${appLocalizer.apiURL}/acptg/v2/acptg_save_cpt`
+  const url = `${appLocalizer.apiURL}/acptg/v2/acptg_update_cpt`
 
   const fetchCPT = `${appLocalizer.apiURL}/acptg/v2/acptg_get_cpt_by_key`
 
@@ -234,7 +234,7 @@ const EditCPT = ({cptKey}) => {
         visibility_show_in_admin_bar: newData.show_in_admin_bar.toString(),
         visibility_show_in_nav_menu: newData.show_in_nav_menus.toString(),
       }
-      editVisibility.visibility_admin_sidebar_icon = newData.menu == undefined ? '' : newData.menu
+      editVisibility.visibility_admin_sidebar_icon = newData.menu_icon == undefined ? '' : newData.menu_icon
       const editQuery = {
         publicly_queryable: newData.publicly_queryable.toString(),
       }
@@ -302,6 +302,44 @@ const EditCPT = ({cptKey}) => {
     })
   }, [])
   
+  const getSupports = (...args) => {
+    console.log(args)
+    for(let support of args) {
+      if(document.getElementById(support).checked == true) {
+        options[support] = true
+        // console.log(support, options[support])
+      } else {
+        options[support] = false
+        // console.log(support, options[support])
+      }
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setPostTypes({...postTypes, [e.target.name]:e.target.value})
+    setLabels({...labels, [e.target.name]:e.target.value})
+    setOptions({...options, [e.target.name]:e.target.value})
+    setVisibility({...visibility, [e.target.name]:e.target.value})
+    setQuery({...query, [e.target.name]:e.target.value})
+    setPermalink({...permalink, [e.target.name]:e.target.value})
+    setCapabilities({...capabilities, [e.target.name]:e.target.value})
+    setRest({...rest, [e.target.name]:e.target.value})
+    getSupports('supports_title_checkbox','supports_editor_checkbox','supports_excerpt_checkbox','supports_author_checkbox','supports_thumbnail_checkbox','supports_comments_checkbox','supports_trackbacks_checkbox','supports_revisions_checkbox','supports_custom_fields_checkbox','supports_page_attributes_checkbox','supports_post_formats_checkbox')
+    console.log(options)
+    const cpt_data = {postTypes, labels, options, visibility, query, permalink, capabilities, rest}
+
+    axios.post( url, {
+      ...cpt_data
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-WP-NONCE': appLocalizer.nonce
+      }
+    })
+    .then((res) => console.log(res) )
+
+  }
 
   return (
     <>
@@ -319,7 +357,7 @@ const EditCPT = ({cptKey}) => {
           <Capabilities onCapabilitiesChange={setCapabilities} capabilities={capabilities} />
           <Rest onRestChange={setRest} rest={rest} />
         </div>
-        <button className="btn btn-success">Save Changes</button> &emsp;
+        <button onClick={handleSubmit} className="btn btn-success">Save Changes</button> &emsp;
         <button onClick={() => setIsListDisplayed(true)} className="btn btn-warning">Go Back</button>
       </div>
       }

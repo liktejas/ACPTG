@@ -295,7 +295,7 @@ const EditCPT = _ref => {
   let {
     cptKey
   } = _ref;
-  const url = `${appLocalizer.apiURL}/acptg/v2/acptg_save_cpt`;
+  const url = `${appLocalizer.apiURL}/acptg/v2/acptg_update_cpt`;
   const fetchCPT = `${appLocalizer.apiURL}/acptg/v2/acptg_get_cpt_by_key`;
   const [isListDisplayed, setIsListDisplayed] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   const [postTypes, setPostTypes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
@@ -502,7 +502,7 @@ const EditCPT = _ref => {
         visibility_show_in_admin_bar: newData.show_in_admin_bar.toString(),
         visibility_show_in_nav_menu: newData.show_in_nav_menus.toString()
       };
-      editVisibility.visibility_admin_sidebar_icon = newData.menu == undefined ? '' : newData.menu;
+      editVisibility.visibility_admin_sidebar_icon = newData.menu_icon == undefined ? '' : newData.menu_icon;
       const editQuery = {
         publicly_queryable: newData.publicly_queryable.toString()
       };
@@ -562,6 +562,77 @@ const EditCPT = _ref => {
       setRest(editRest);
     });
   }, []);
+  const getSupports = function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    console.log(args);
+    for (let support of args) {
+      if (document.getElementById(support).checked == true) {
+        options[support] = true;
+        // console.log(support, options[support])
+      } else {
+        options[support] = false;
+        // console.log(support, options[support])
+      }
+    }
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setPostTypes({
+      ...postTypes,
+      [e.target.name]: e.target.value
+    });
+    setLabels({
+      ...labels,
+      [e.target.name]: e.target.value
+    });
+    setOptions({
+      ...options,
+      [e.target.name]: e.target.value
+    });
+    setVisibility({
+      ...visibility,
+      [e.target.name]: e.target.value
+    });
+    setQuery({
+      ...query,
+      [e.target.name]: e.target.value
+    });
+    setPermalink({
+      ...permalink,
+      [e.target.name]: e.target.value
+    });
+    setCapabilities({
+      ...capabilities,
+      [e.target.name]: e.target.value
+    });
+    setRest({
+      ...rest,
+      [e.target.name]: e.target.value
+    });
+    getSupports('supports_title_checkbox', 'supports_editor_checkbox', 'supports_excerpt_checkbox', 'supports_author_checkbox', 'supports_thumbnail_checkbox', 'supports_comments_checkbox', 'supports_trackbacks_checkbox', 'supports_revisions_checkbox', 'supports_custom_fields_checkbox', 'supports_page_attributes_checkbox', 'supports_post_formats_checkbox');
+    console.log(options);
+    const cpt_data = {
+      postTypes,
+      labels,
+      options,
+      visibility,
+      query,
+      permalink,
+      capabilities,
+      rest
+    };
+    axios__WEBPACK_IMPORTED_MODULE_12__["default"].post(url, {
+      ...cpt_data
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-WP-NONCE': appLocalizer.nonce
+      }
+    }).then(res => console.log(res));
+  };
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !isListDisplayed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "container"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
@@ -594,6 +665,7 @@ const EditCPT = _ref => {
     onRestChange: setRest,
     rest: rest
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: handleSubmit,
     className: "btn btn-success"
   }, "Save Changes"), " \u2003", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     onClick: () => setIsListDisplayed(true),
@@ -1868,7 +1940,7 @@ const Supports = _ref => {
     value: options.supports_title_checkbox,
     name: "supports_title_checkbox",
     id: "supports_title_checkbox",
-    defaultChecked: options.supports_title_checkbox,
+    checked: options.supports_title_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1879,7 +1951,7 @@ const Supports = _ref => {
     value: options.supports_editor_checkbox,
     name: "supports_editor_checkbox",
     id: "supports_editor_checkbox",
-    defaultChecked: options.supports_editor_checkbox,
+    checked: options.supports_editor_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1890,7 +1962,7 @@ const Supports = _ref => {
     value: options.supports_excerpt_checkbox,
     name: "supports_excerpt_checkbox",
     id: "supports_excerpt_checkbox",
-    defaultChecked: options.supports_excerpt_checkbox,
+    checked: options.supports_excerpt_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1901,7 +1973,7 @@ const Supports = _ref => {
     value: options.supports_author_checkbox,
     name: "supports_author_checkbox",
     id: "supports_author_checkbox",
-    defaultChecked: options.supports_author_checkbox,
+    checked: options.supports_author_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1912,7 +1984,7 @@ const Supports = _ref => {
     value: options.supports_thumbnail_checkbox,
     name: "supports_thumbnail_checkbox",
     id: "supports_thumbnail_checkbox",
-    defaultChecked: options.supports_thumbnail_checkbox,
+    checked: options.supports_thumbnail_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1923,7 +1995,7 @@ const Supports = _ref => {
     value: options.supports_comments_checkbox,
     name: "supports_comments_checkbox",
     id: "supports_comments_checkbox",
-    defaultChecked: options.supports_comments_checkbox,
+    checked: options.supports_comments_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1934,7 +2006,7 @@ const Supports = _ref => {
     value: options.supports_trackbacks_checkbox,
     name: "supports_trackbacks_checkbox",
     id: "supports_trackbacks_checkbox",
-    defaultChecked: options.supports_trackbacks_checkbox,
+    checked: options.supports_trackbacks_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1945,7 +2017,7 @@ const Supports = _ref => {
     value: options.supports_revisions_checkbox,
     name: "supports_revisions_checkbox",
     id: "supports_revisions_checkbox",
-    defaultChecked: options.supports_revisions_checkbox,
+    checked: options.supports_revisions_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1956,7 +2028,7 @@ const Supports = _ref => {
     value: options.supports_custom_fields_checkbox,
     id: "supports_custom_fields_checkbox",
     name: "supports_custom_fields_checkbox",
-    defaultChecked: options.supports_custom_fields_checkbox,
+    checked: options.supports_custom_fields_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1967,7 +2039,7 @@ const Supports = _ref => {
     value: options.supports_page_attributes_checkbox,
     id: "supports_page_attributes_checkbox",
     name: "supports_page_attributes_checkbox",
-    defaultChecked: options.supports_page_attributes_checkbox,
+    checked: options.supports_page_attributes_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",
@@ -1978,7 +2050,7 @@ const Supports = _ref => {
     value: options.supports_post_formats_checkbox,
     id: "supports_post_formats_checkbox",
     name: "supports_post_formats_checkbox",
-    defaultChecked: options.supports_post_formats_checkbox,
+    checked: options.supports_post_formats_checkbox,
     onChange: changeOptions
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     class: "form-check-label align-baseline",

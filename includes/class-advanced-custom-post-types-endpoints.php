@@ -43,7 +43,14 @@ class WP_ACPTG_EndPoints {
 
         register_rest_route( 'acptg/v2', '/acptg_get_cpt_by_key', array(
                 'methods'             => 'POST',
-                'callback'            => array( $this, 'acptg_get_option_by_id' ),
+                'callback'            => array( $this, 'acptg_get_option_by_key' ),
+                'permission_callback' => array( $this, 'save_settings_permission' ),
+            )
+        );
+
+        register_rest_route( 'acptg/v2', '/acptg_update_cpt', array(
+                'methods'             => 'POST',
+                'callback'            => array( $this, 'acptg_update_cpt' ),
                 'permission_callback' => array( $this, 'save_settings_permission' ),
             )
         );
@@ -63,8 +70,7 @@ class WP_ACPTG_EndPoints {
         return rest_ensure_response( $results );
     }
 
-    public function acptg_save_cpt( WP_REST_Request $request ) {
-        $body         = json_decode( $request->get_body(), true );
+    public function process_cpt_info( $body ) {
         $post_types   = $body['postTypes'];
         $labels       = $body['labels'];
         $options      = $body['options'];
@@ -130,10 +136,41 @@ class WP_ACPTG_EndPoints {
         $args['rest_base'] = $rest['rest_base'];
         $args['rest_controller_class'] = $rest['rest_controller_class'];
 
-        if ( add_option( $this->make_option( $post_types['post_type_key'] ), $args ) ) {
+        return $args;
+    }
+
+    public function acptg_save_cpt( WP_REST_Request $request ) {
+        $body         = json_decode( $request->get_body(), true );
+        error_log( print_r( $body['postTypes']['post_type_key'], true ) );
+
+        $args = $this->process_cpt_info( $body );
+
+        if ( add_option( $this->make_option( $body['postTypes']['post_type_key'] ), $args ) ) {
             return rest_ensure_response( array(
                 'msg'    => 'ACPT Generated Successfully',
                 'status' => 201,
+                )
+            );
+        } else {
+            return rest_ensure_response( array(
+                'msg'    => 'Failed to Generate ACPT',
+                'status' => 400,
+                )
+            );
+        }
+                
+    }
+
+    public function acptg_update_cpt( WP_REST_Request $request ) {
+        $body         = json_decode( $request->get_body(), true );
+        error_log( print_r( $body['postTypes']['post_type_key'], true ) );
+
+        $args = $this->process_cpt_info( $body );
+
+        if ( update_option( $body['postTypes']['post_type_key'], $args ) ) {
+            return rest_ensure_response( array(
+                'msg'    => 'ACPT Updated Successfully',
+                'status' => 200,
                 )
             );
         } else {
@@ -167,7 +204,7 @@ class WP_ACPTG_EndPoints {
         return 'acptg_' . $option;
     }
 
-    public function acptg_get_option_by_id( WP_REST_Request $request ) {
+    public function acptg_get_option_by_key( WP_REST_Request $request ) {
         $body = json_decode( $request->get_body(), true );
         $option = get_option( $body['cptKey'] );
         return rest_ensure_response( array(
