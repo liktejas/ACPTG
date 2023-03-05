@@ -61,7 +61,7 @@ const Supports = ({onOptionsChange, options}) => {
                         <div class="my-3">
                             <label for="exclude_from_search" className="form-label fw-semibold">Exclude From Search</label>
                             <select class="form-select" aria-label="Default select example" id="exclude_from_search" name="exclude_from_search" onChange={changeOptions}>
-                                {options.exclude_from_search 
+                                {options.exclude_from_search == 'true'
                                 ? <><option value="false">No</option><option selected value="true">Yes</option></> 
                                 : <><option selected value="false">No</option><option value="true">Yes</option></> }
                             </select>
@@ -70,7 +70,7 @@ const Supports = ({onOptionsChange, options}) => {
                         <div class="my-3">
                             <label for="enable_export" className="form-label fw-semibold">Enable Export</label>
                             <select class="form-select" aria-label="Default select example" id="enable_export" name="enable_export" onChange={changeOptions}>
-                                {options.enable_export
+                                {options.enable_export == 'true'
                                 ? <><option selected value="true">Yes</option><option value="false">No</option></>
                                 : <><option value="true">Yes</option><option selected value="false">No</option></>
                                 }
@@ -82,16 +82,10 @@ const Supports = ({onOptionsChange, options}) => {
                         <div class="my-3">
                             <label for="enable_archives" className="form-label fw-semibold">Enable Archives</label>
                             <select class="form-select" aria-label="Default select example" id="enable_archives" name="enable_archives" onChange={changeOptions}>
-                                {Boolean(options.enable_archives) == true &&
-                                <>
-                                    <option value="true" selected>Yes</option>
-                                    <option value="false">No</option>
-                                </>}
-                                { Boolean(options.enable_archives) == false && 
-                                <>
-                                    <option value="true">Yes</option>
-                                    <option selected value="false">No</option>
-                                </>}
+                                {options.enable_archives == 'true'
+                                ? <><option value="true" selected>Yes</option><option value="false">No</option></>
+                                : <><option value="true">Yes</option><option selected value="false">No</option></>
+                                }
                             </select>
                             <p>Enables post type archives. Post type key is used as defauly archive slug.</p>
                         </div>

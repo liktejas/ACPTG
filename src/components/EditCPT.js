@@ -173,7 +173,7 @@ const EditCPT = ({cptKey}) => {
   }
 
   useEffect(() => {
-    console.log(cptKey)
+    console.log(cptKey.slice(6))
     axios.post( fetchCPT, {
       cptKey
     }, {
@@ -186,7 +186,7 @@ const EditCPT = ({cptKey}) => {
       console.log(res.data.option)
       const newData = res.data.option
       const editPostTypes = {
-        post_type_key: cptKey,
+        post_type_key: cptKey.slice(6),
         name_singular: newData.label,
         name_plural: newData.labels.name,
         link_to_taxonomies: newData.taxonomies.toString(),
@@ -337,7 +337,10 @@ const EditCPT = ({cptKey}) => {
         'X-WP-NONCE': appLocalizer.nonce
       }
     })
-    .then((res) => console.log(res) )
+    .then((res) => {
+      console.log(res)
+      // console.log(postTypes.name_singular)
+    })
 
   }
 

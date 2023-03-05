@@ -66,7 +66,6 @@ const AddNewCPT = () => {
     exclude_from_search: "false",
     enable_export: "true",
     enable_archives: "true",
-    custom_archive_slug: "",
   })
 
   const [visibility, setVisibility] = useState({

@@ -12,6 +12,8 @@ const App = () => {
 
   const fetchACPTGURL = appLocalizer.apiURL + '/acptg/v2/acptg_list_all'
 
+  const deleteACPTGURL = appLocalizer.apiURL + '/acptg/v2/acptg_delete_cpt'
+
   useEffect(() => {
     axios.get(fetchACPTGURL)
       .then((res) => {
@@ -25,6 +27,22 @@ const App = () => {
   const onActions = (cpt) => {
     setIsEdit(true)
     setCPTKey(cpt)
+  }
+
+  const onDelete = (cpt) => {
+    console.log(cpt)
+    axios.post( deleteACPTGURL, {
+      cpt
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-WP-NONCE': appLocalizer.nonce
+      }
+    })
+    .then((res) => {
+      console.log(res)
+      // console.log(postTypes.name_singular)
+    })
   }
 
   return (
@@ -49,7 +67,7 @@ const App = () => {
                     <tr>
                       <th scope="row">{current.option_name.slice(6)}</th>
                       <td><button onClick={() => onActions(current.option_name)} className="btn btn-sm btn-warning"><span class="dashicons dashicons-edit"></span></button></td>
-                      <td><button onClick={() => onActions(current.option_name)} className="btn btn-sm btn-danger"><span class="dashicons dashicons-trash"></span></button></td>
+                      <td><button onClick={() => onDelete(current.option_name)} className="btn btn-sm btn-danger"><span class="dashicons dashicons-trash"></span></button></td>
                     </tr>
                   )
                 })

@@ -101,8 +101,7 @@ const AddNewCPT = () => {
     supports_post_formats_checkbox: false,
     exclude_from_search: "false",
     enable_export: "true",
-    enable_archives: "true",
-    custom_archive_slug: ""
+    enable_archives: "true"
   });
   const [visibility, setVisibility] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
     visibility_public: 'true',
@@ -440,7 +439,7 @@ const EditCPT = _ref => {
     return defaultSupports;
   };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    console.log(cptKey);
+    console.log(cptKey.slice(6));
     axios__WEBPACK_IMPORTED_MODULE_12__["default"].post(fetchCPT, {
       cptKey
     }, {
@@ -452,7 +451,7 @@ const EditCPT = _ref => {
       console.log(res.data.option);
       const newData = res.data.option;
       const editPostTypes = {
-        post_type_key: cptKey,
+        post_type_key: cptKey.slice(6),
         name_singular: newData.label,
         name_plural: newData.labels.name,
         link_to_taxonomies: newData.taxonomies.toString(),
@@ -631,8 +630,12 @@ const EditCPT = _ref => {
         'content-type': 'application/json',
         'X-WP-NONCE': appLocalizer.nonce
       }
-    }).then(res => console.log(res));
+    }).then(res => {
+      console.log(res);
+      // console.log(postTypes.name_singular)
+    });
   };
+
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !isListDisplayed && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "container"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
@@ -702,6 +705,7 @@ const App = () => {
   const [isEdit, setIsEdit] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
   const [cptKey, setCPTKey] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0);
   const fetchACPTGURL = appLocalizer.apiURL + '/acptg/v2/acptg_list_all';
+  const deleteACPTGURL = appLocalizer.apiURL + '/acptg/v2/acptg_delete_cpt';
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     axios__WEBPACK_IMPORTED_MODULE_3__["default"].get(fetchACPTGURL).then(res => {
       if (res.status === 200) {
@@ -714,6 +718,21 @@ const App = () => {
     setIsEdit(true);
     setCPTKey(cpt);
   };
+  const onDelete = cpt => {
+    console.log(cpt);
+    axios__WEBPACK_IMPORTED_MODULE_3__["default"].post(deleteACPTGURL, {
+      cpt
+    }, {
+      headers: {
+        'content-type': 'application/json',
+        'X-WP-NONCE': appLocalizer.nonce
+      }
+    }).then(res => {
+      console.log(res);
+      // console.log(postTypes.name_singular)
+    });
+  };
+
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, !isEdit && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "container-fluid"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", {
@@ -741,7 +760,7 @@ const App = () => {
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       class: "dashicons dashicons-edit"
     }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-      onClick: () => onActions(current.option_name),
+      onClick: () => onDelete(current.option_name),
       className: "btn btn-sm btn-danger"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
       class: "dashicons dashicons-trash"
@@ -2068,7 +2087,7 @@ const Supports = _ref => {
     id: "exclude_from_search",
     name: "exclude_from_search",
     onChange: changeOptions
-  }, options.exclude_from_search ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, options.exclude_from_search == 'true' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "false"
   }, "No"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     selected: true,
@@ -2089,7 +2108,7 @@ const Supports = _ref => {
     id: "enable_export",
     name: "enable_export",
     onChange: changeOptions
-  }, options.enable_export ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, options.enable_export == 'true' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     selected: true,
     value: "true"
   }, "Yes"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
@@ -2112,12 +2131,12 @@ const Supports = _ref => {
     id: "enable_archives",
     name: "enable_archives",
     onChange: changeOptions
-  }, Boolean(options.enable_archives) == true && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, options.enable_archives == 'true' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "true",
     selected: true
   }, "Yes"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "false"
-  }, "No")), Boolean(options.enable_archives) == false && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
+  }, "No")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     value: "true"
   }, "Yes"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("option", {
     selected: true,

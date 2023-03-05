@@ -54,6 +54,12 @@ class WP_ACPTG_EndPoints {
                 'permission_callback' => array( $this, 'save_settings_permission' ),
             )
         );
+        register_rest_route( 'acptg/v2', '/acptg_delete_cpt', array(
+                'methods'             => 'POST',
+                'callback'            => array( $this, 'acptg_delete_cpt' ),
+                'permission_callback' => array( $this, 'save_settings_permission' ),
+            )
+        );
     }
 
     public function get_settings_permission() {
@@ -79,7 +85,7 @@ class WP_ACPTG_EndPoints {
         $permalink    = $body['permalink'];
         $capabilities = $body['capabilities'];
         $rest         = $body['rest'];
-        error_log(print_r($post_types, true));
+        
         $labels += array( 'singular_name' => $post_types['name_singular'], 'name' => $post_types['name_plural'] );
         unset( $post_types['name_plural'] );
         
@@ -135,13 +141,12 @@ class WP_ACPTG_EndPoints {
         }
         $args['rest_base'] = $rest['rest_base'];
         $args['rest_controller_class'] = $rest['rest_controller_class'];
-
+        
         return $args;
     }
 
     public function acptg_save_cpt( WP_REST_Request $request ) {
-        $body         = json_decode( $request->get_body(), true );
-        error_log( print_r( $body['postTypes']['post_type_key'], true ) );
+        $body = json_decode( $request->get_body(), true );
 
         $args = $this->process_cpt_info( $body );
 
@@ -162,12 +167,11 @@ class WP_ACPTG_EndPoints {
     }
 
     public function acptg_update_cpt( WP_REST_Request $request ) {
-        $body         = json_decode( $request->get_body(), true );
-        error_log( print_r( $body['postTypes']['post_type_key'], true ) );
+        $body = json_decode( $request->get_body(), true );
 
         $args = $this->process_cpt_info( $body );
 
-        if ( update_option( $body['postTypes']['post_type_key'], $args ) ) {
+        if ( update_option( $this->make_option( $body['postTypes']['post_type_key'] ), $args ) ) {
             return rest_ensure_response( array(
                 'msg'    => 'ACPT Updated Successfully',
                 'status' => 200,
@@ -175,7 +179,7 @@ class WP_ACPTG_EndPoints {
             );
         } else {
             return rest_ensure_response( array(
-                'msg'    => 'Failed to Generate ACPT',
+                'msg'    => 'Failed to Update ACPT',
                 'status' => 400,
                 )
             );
@@ -212,6 +216,24 @@ class WP_ACPTG_EndPoints {
             'status' => 200,
             )
         );
+    }
+
+    public function acptg_delete_cpt( WP_REST_Request $request ) {
+        $body = json_decode( $request->get_body(), true );
+
+        if ( delete_option( $body['cpt'] ) ) {
+            return rest_ensure_response( array(
+                'msg'    => 'ACPT Deleted Successfully',
+                'status' => 200,
+                )
+            );
+        } else {
+            return rest_ensure_response( array(
+                'msg'    => 'Failed to Delete ACPT',
+                'status' => 400,
+                )
+            );
+        }
     }
 
 }
