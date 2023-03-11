@@ -5,6 +5,10 @@
     input[type=checkbox]:checked::before {
         content: '';
     }
+    .progress_loader{
+        display: flex;
+        justify-content: center;
+    }
 }
 .custom-form-select {
     display: block;

@@ -17,6 +17,10 @@
 .acpt-generator_page_acptg-add-new input[type=checkbox]:checked::before, .toplevel_page_acptg-settings input[type=checkbox]:checked::before {
   content: "";
 }
+.acpt-generator_page_acptg-add-new .progress_loader, .toplevel_page_acptg-settings .progress_loader {
+  display: flex;
+  justify-content: center;
+}
 
 .custom-form-select {
   display: block;

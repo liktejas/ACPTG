@@ -51,7 +51,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "5" && 
                                         <>
                                             <option value="5" selected>5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -65,7 +65,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "10" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10" selected>10 - below Posts</option>
+                                            <option value="10" selected>10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -79,7 +79,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "15" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15" selected>15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -93,7 +93,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "20" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20" selected>20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -107,7 +107,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "25" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25" selected>25 - below Comments</option>
@@ -121,7 +121,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "60" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -135,7 +135,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "65" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -149,7 +149,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "70" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -163,7 +163,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "75" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -177,7 +177,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "80" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>
@@ -191,7 +191,7 @@ const Visibility = ({onVisibilityChange, visibility}) => {
                                         {visibility.visibility_where_show_in_admin_sidebar == "100" && 
                                         <>
                                             <option value="5">5 - below Posts</option>
-                                            <option value="10">10 - below Posts</option>
+                                            <option value="10">10 - below Media</option>
                                             <option value="15">15 - below Links</option>
                                             <option value="20">20 - below Pages</option>
                                             <option value="25">25 - below Comments</option>

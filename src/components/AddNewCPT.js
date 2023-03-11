@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2'
 import axios from 'axios'
 import Tabs from './Tabs'
 import PostTypes from './Tabs/PostTypes'
@@ -112,32 +113,30 @@ const AddNewCPT = () => {
 
   const getSupports = (...args) => {
     console.log(args)
-    for(let support of args) {
-      if(document.getElementById(support).checked == true) {
+    for (let support of args) {
+      if (document.getElementById(support).checked == true) {
         options[support] = true
-        // console.log(support, options[support])
       } else {
         options[support] = false
-        // console.log(support, options[support])
       }
     }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setPostTypes({...postTypes, [e.target.name]:e.target.value})
-    setLabels({...labels, [e.target.name]:e.target.value})
-    setOptions({...options, [e.target.name]:e.target.value})
-    setVisibility({...visibility, [e.target.name]:e.target.value})
-    setQuery({...query, [e.target.name]:e.target.value})
-    setPermalink({...permalink, [e.target.name]:e.target.value})
-    setCapabilities({...capabilities, [e.target.name]:e.target.value})
-    setRest({...rest, [e.target.name]:e.target.value})
-    getSupports('supports_title_checkbox','supports_editor_checkbox','supports_excerpt_checkbox','supports_author_checkbox','supports_thumbnail_checkbox','supports_comments_checkbox','supports_trackbacks_checkbox','supports_revisions_checkbox','supports_custom_fields_checkbox','supports_page_attributes_checkbox','supports_post_formats_checkbox')
+    setPostTypes({ ...postTypes, [e.target.name]: e.target.value })
+    setLabels({ ...labels, [e.target.name]: e.target.value })
+    setOptions({ ...options, [e.target.name]: e.target.value })
+    setVisibility({ ...visibility, [e.target.name]: e.target.value })
+    setQuery({ ...query, [e.target.name]: e.target.value })
+    setPermalink({ ...permalink, [e.target.name]: e.target.value })
+    setCapabilities({ ...capabilities, [e.target.name]: e.target.value })
+    setRest({ ...rest, [e.target.name]: e.target.value })
+    getSupports('supports_title_checkbox', 'supports_editor_checkbox', 'supports_excerpt_checkbox', 'supports_author_checkbox', 'supports_thumbnail_checkbox', 'supports_comments_checkbox', 'supports_trackbacks_checkbox', 'supports_revisions_checkbox', 'supports_custom_fields_checkbox', 'supports_page_attributes_checkbox', 'supports_post_formats_checkbox')
     console.log(options)
-    const cpt_data = {postTypes, labels, options, visibility, query, permalink, capabilities, rest}
+    const cpt_data = { postTypes, labels, options, visibility, query, permalink, capabilities, rest }
 
-    axios.post( url, {
+    axios.post(url, {
       ...cpt_data
     }, {
       headers: {
@@ -145,7 +144,52 @@ const AddNewCPT = () => {
         'X-WP-NONCE': appLocalizer.nonce
       }
     })
-    .then((res) => console.log(res) )
+      .then((res) => {
+        console.log(res)
+        if (res.data.status == 201) {
+          let timerInterval
+          Swal.fire({
+            title: 'CPT Added Successfully!',
+            html: 'Redirecting in <span></span> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            icon: 'success',
+            didOpen: () => {
+              Swal.showLoading()
+              const span = Swal.getHtmlContainer().querySelector('span')
+              timerInterval = setInterval(() => {
+                span.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              location.href = `${appLocalizer.siteURL}wp-admin/admin.php?page=acptg-settings`
+            }
+          })
+        } else {
+          let timerInterval
+          Swal.fire({
+            title: 'Something Went Wrong!',
+            html: 'Please Try Again',
+            timer: 2000,
+            timerProgressBar: true,
+            icon: 'error',
+            didOpen: () => {
+              Swal.showLoading()
+              const span = Swal.getHtmlContainer().querySelector('span')
+              timerInterval = setInterval(() => {
+                Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => { })
+        }
+      })
 
   }
 
@@ -159,14 +203,14 @@ const AddNewCPT = () => {
           <Labels onLabelChange={setLabels} labels={labels} />
           <Supports onOptionsChange={setOptions} options={options} />
           <Visibility onVisibilityChange={setVisibility} visibility={visibility} />
-          <Query onQueryChange={setQuery} query={query}/>
+          <Query onQueryChange={setQuery} query={query} />
           <Permalinks onPermalinkChange={setPermalink} permalink={permalink} />
           <Capabilities onCapabilitiesChange={setCapabilities} capabilities={capabilities} />
           <Rest onRestChange={setRest} rest={rest} />
         </div>
         <button onClick={handleSubmit} className="btn btn-success">Save Changes</button>
       </div>
-    </> 
+    </>
   )
 }
 
