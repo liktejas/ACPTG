@@ -21,6 +21,7 @@
  * Author URI:        https://github.com/liktejas/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       advanced-cpt-generator
  * Domain Path:       /languages
  */
 
